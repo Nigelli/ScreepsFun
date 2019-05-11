@@ -12,21 +12,21 @@ const dest = process.env.DEST;
 if (!dest) {
   console.log("No destination specified - code will be compiled but not uploaded");
 } else if ((cfg = require("./screeps.json")[dest]) == null) {
-  row new Error("Invalid upload destination");
+  throw new Error("Invalid upload destination");
 }
 
 export default {
-input: "src/main.ts",
-  tput: {
-  file: "dist/main.js",
-  format: "cjs",
+  input: "src/main.ts",
+  output: {
+    file: "dist/main.js",
+    format: "cjs",
     sourcemap: true
+  },
 
-
-  ugins: [
-  // multiEntry(),
-  clear({ targets: ["dist"] }),
-  resolve(),
+  plugins: [
+    // multiEntry(),
+    clear({ targets: ["dist"] }),
+    resolve(),
     commonjs(),
     typescript({ tsconfig: "./tsconfig.json" }),
     screeps({ config: cfg, dryRun: cfg == null })
