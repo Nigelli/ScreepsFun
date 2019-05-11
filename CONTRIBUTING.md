@@ -4,7 +4,11 @@ This document outlines guides to get started on developing the starter kit.
 
 ## Contributing to the docs
 
+<<<<<<< HEAD
 Contributions to the docs are also welcome! We've documented the steps to do so [here](./docs/in-depth/contributing.md).
+=======
+Contributions to the docs are also welcome! We've documented the steps to do so [here](./docs/contributing.md).
+>>>>>>> 64a9bbc54713b5781262ddec53a805d6e3f1ceec
 
 ## The Five Golden Rules
 

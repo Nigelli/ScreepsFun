@@ -10,6 +10,7 @@
     "node_modules/**": true,
     "typings/**": true
   },
+<<<<<<< HEAD
   "typescript.tsdk": "./node_modules/typescript/lib",
   "[json]": {
     "editor.formatOnSave": true
@@ -20,4 +21,7 @@
   "[typescript]": {
     "editor.formatOnSave": true
   }
+=======
+  "typescript.tsdk": "./node_modules/typescript/lib"
+>>>>>>> 64a9bbc54713b5781262ddec53a805d6e3f1ceec
 }
