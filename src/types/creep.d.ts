@@ -1,0 +1,3 @@
+interface BaseCreep {
+    DoWork(): void;
+}
