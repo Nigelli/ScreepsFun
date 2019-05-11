@@ -1,9 +1,5 @@
 // tslint:disable:no-conditional-assignment
-<<<<<<< HEAD
 import { SourceMapConsumer } from "source-map";
-=======
-import {SourceMapConsumer} from "source-map/source-map";
->>>>>>> 64a9bbc54713b5781262ddec53a805d6e3f1ceec
 
 export class ErrorMapper {
   // Cache consumer
@@ -30,11 +26,7 @@ export class ErrorMapper {
    * @returns {string} The source-mapped stack trace
    */
   public static sourceMappedStackTrace(error: Error | string): string {
-<<<<<<< HEAD
     const stack: string = error instanceof Error ? (error.stack as string) : error;
-=======
-    const stack: string = error instanceof Error ? error.stack as string : error;
->>>>>>> 64a9bbc54713b5781262ddec53a805d6e3f1ceec
     if (this.cache.hasOwnProperty(stack)) {
       return this.cache[stack];
     }
@@ -43,11 +35,7 @@ export class ErrorMapper {
     let match: RegExpExecArray | null;
     let outStack = error.toString();
 
-<<<<<<< HEAD
     while ((match = re.exec(stack))) {
-=======
-    while (match = re.exec(stack)) {
->>>>>>> 64a9bbc54713b5781262ddec53a805d6e3f1ceec
       if (match[2] === "main") {
         const pos = this.consumer.originalPositionFor({
           column: parseInt(match[4], 10),

@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
     "module": "esnext",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "target": "es2017",
-=======
-    "module": "es2015",
-    "target": "es2015",
->>>>>>> 64a9bbc54713b5781262ddec53a805d6e3f1ceec
     "moduleResolution": "Node",
     "outDir": "dist",
     "baseUrl": "src/",
