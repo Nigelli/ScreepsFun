@@ -5,6 +5,7 @@ import { Spawns } from "enums/spawn";
 import { Spawner } from "spawning/spawner";
 import { RoleName } from "enums/role-name";
 import { Builder } from "roles/builder";
+import { Repairer } from "roles/repairer";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
@@ -24,8 +25,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
         break;
       case RoleName.Harvester:
         new Harvester(creep).DoWork();
+        break;
       case 'Harvester':
         new Harvester(creep).DoWork();
+        break;
+      case RoleName.Repairer:
+        new Repairer(creep).DoWork();
+        break;
       default:
         break;
     }

@@ -13,5 +13,9 @@ export class Spawner {
             console.log('spawn new builder')
             spawn.spawnCreep(BASIC_BUILDER, `BLD-${spawn.room.name}-${Game.time}`, { memory: { role: RoleName.Builder } });
         }
+        if (_.filter(Game.creeps, creep => creep.memory.role === RoleName.Repairer).length < 1) {
+            console.log('spawn new repairer')
+            spawn.spawnCreep(BASIC_BUILDER, `RPR-${spawn.room.name}-${Game.time}`, { memory: { role: RoleName.Repairer } });
+        }
     }
 }

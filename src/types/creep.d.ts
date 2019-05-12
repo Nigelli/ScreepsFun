@@ -1,3 +1,3 @@
-interface BaseCreep {
+interface RoleCreep {
     DoWork(): void;
 }

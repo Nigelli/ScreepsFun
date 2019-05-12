@@ -1,5 +1,8 @@
 export enum TaskType {
     Deposit = 'deposit',
     Harvest = 'harvest',
-    Build = 'build'
+    Build = 'build',
+    Collect = 'collect',
+    Upgrade = 'upgrade',
+    Repair = 'repair'
 }

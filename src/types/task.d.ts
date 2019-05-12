@@ -7,4 +7,4 @@ interface Task {
     complete: boolean;
 }
 
-type Target = Source | Creep | Structure<StructureConstant>;
+type Target = Source | Creep | Structure<StructureConstant> | ConstructionSite<BuildableStructureConstant>;
