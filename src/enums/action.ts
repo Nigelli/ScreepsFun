@@ -3,5 +3,6 @@ export enum Action {
     Transfer = 1,
     Build = 2,
     Collect = 3,
-    Repair = 4
+    Repair = 4,
+    Upgrade = 5
 }

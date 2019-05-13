@@ -33,6 +33,12 @@ export class TaskProcessor {
             case Action.Repair:
                 this.ProcessRepair(target, creep, task);
                 break;
+            case Action.Collect:
+                this.ProcessCollect(target, creep, task);
+                break;
+            case Action.Upgrade:
+                this.ProcessUpgrade(target, creep, task);
+                break;
             default:
                 throw new Error('Action has no implmented processor');
         }
@@ -60,7 +66,7 @@ export class TaskProcessor {
         }
         if ((target as Structure).structureType &&
             (target as Structure).structureType === STRUCTURE_CONTROLLER) {
-            creep.upgradeController(target as StructureController);
+            this.ProcessUpgrade(target, creep, task);
         } else {
             creep.transfer(target as Creep, RESOURCE_ENERGY);
         }
@@ -86,5 +92,32 @@ export class TaskProcessor {
         if (creep.repair(target) !== OK) {
             task.complete = true;
         }
+    }
+
+    private static ProcessCollect(target: Target, creep: Creep, task: Task) {
+        if (!(target instanceof StructureContainer) && !(target instanceof StructureStorage)) {
+            task.complete = true;
+            return;
+        }
+
+        if (creep.withdraw(target, RESOURCE_ENERGY) !== OK) {
+            task.complete = true;
+        }
+    }
+
+    private static ProcessUpgrade(target: Target, creep: Creep, task: Task) {
+        if (!target) {
+            throw new Error(`${creep.name} has a transfer task with no target`);
+        }
+        if (0 === _.sum(creep.carry)) {
+            task.complete = true;
+            return;
+        }
+        if ((target as Structure).structureType &&
+            (target as Structure).structureType === STRUCTURE_CONTROLLER) {
+            creep.upgradeController(target as StructureController);
+        }
+        task.complete = true;
+        return;
     }
 }

@@ -15,7 +15,7 @@ export class Builder extends BaseCreep implements RoleCreep {
         if (_.sum(this.creep.carry) >= this.creep.carryCapacity / 2) {
             return TaskFactory.Create(TaskType.Build, this.creep);
         } else {
-            return TaskFactory.Create(TaskType.Harvest, this.creep);
+            return TaskFactory.Create(TaskType.Collect, this.creep);
         }
     }
 }

@@ -5,9 +5,10 @@ export class RoomUtilities {
 
         if (!Object.keys(this.room.memory).length) {
             this.MapSources();
-            if (Game.time % 60 === 0) {
-                this.MapSourceContainers();
-            }
+        }
+
+        if (Game.time % 60 === 0) {
+            this.MapSourceContainers();
         }
     }
 
@@ -16,10 +17,10 @@ export class RoomUtilities {
     }
 
     public MapSourceContainers() {
-        const sourceContainers = this.room.find(FIND_MY_STRUCTURES)
+        const sourceContainers = this.room.find(FIND_STRUCTURES)
             .filter((structure) => {
-                return structure.structureType === StructureStorage.name ||
-                    structure.structureType === StructureContainer.name
+                return structure.structureType === STRUCTURE_STORAGE ||
+                    structure.structureType === STRUCTURE_CONTAINER
             }).filter(storage => {
                 return this.room.find(FIND_SOURCES).some(source => source.pos.inRangeTo(storage.pos, 5));
             })
