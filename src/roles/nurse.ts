@@ -3,7 +3,7 @@ import { Task } from "types/task";
 import { TaskType } from "enums/task-type";
 import { BaseCreep } from "./base-creep";
 
-export class Upgrader extends BaseCreep {
+export class Nurse extends BaseCreep {
 
     public static DoWork(creep: Creep) {
         super.DoWork(creep)
@@ -13,7 +13,7 @@ export class Upgrader extends BaseCreep {
         if (_.sum(creep.carry) < creep.carryCapacity / 2) {
             return TaskFactory.Create(TaskType.Collect, creep);
         } else {
-            return TaskFactory.Create(TaskType.Upgrade, creep);
+            return TaskFactory.Create(TaskType.Nurse, creep);
         }
     }
 }

@@ -1,30 +1,55 @@
 export class RoomUtilities {
-    private room: Room;
-    constructor(room: Room) {
-        this.room = room;
 
-        if (!Object.keys(this.room.memory).length) {
-            this.MapSources();
+    public static Loop(room: Room) {
+        if (!Object.keys(room.memory).length) {
+            this.MapSources(room);
         }
 
         if (Game.time % 60 === 0) {
-            this.MapSourceContainers();
+            this.MapSourceContainers(room);
+            this.SetTotalEnergyCap(room);
         }
     }
 
-    public MapSources() {
-        this.room.memory.sources = this.room.find(FIND_SOURCES);
+    public static GetDamagedStructures(room: Room) {
+        return room.find(FIND_STRUCTURES)
+            .filter(structure => structure.structureType !== STRUCTURE_WALL)
+            .filter(structure => structure.hits < structure.hitsMax);
     }
 
-    public MapSourceContainers() {
-        const sourceContainers = this.room.find(FIND_STRUCTURES)
+    public static GetDamagedDefenses(room: Room) {
+        return room.find(FIND_STRUCTURES)
+            .filter(structure => structure.structureType === STRUCTURE_WALL)
+            .filter(structure => structure.hits < 30000);
+    }
+
+    public static MapSources(room: Room) {
+        room.memory.sources = room.find(FIND_SOURCES);
+    }
+
+    public static MapSourceContainers(room: Room) {
+        const sourceContainers = room.find(FIND_STRUCTURES)
             .filter((structure) => {
                 return structure.structureType === STRUCTURE_STORAGE ||
                     structure.structureType === STRUCTURE_CONTAINER
             }).filter(storage => {
-                return this.room.find(FIND_SOURCES).some(source => source.pos.inRangeTo(storage.pos, 5));
+                return room.find(FIND_SOURCES).some(source => source.pos.inRangeTo(storage.pos, 5));
             })
 
-        this.room.memory.sourceContainerIds = sourceContainers.map(cntr => cntr.id);
+        room.memory.sourceContainerIds = sourceContainers.map(cntr => cntr.id);
+    }
+
+    public static GetTotalEnergyCap(room: Room) {
+        if (!room.memory.totalEnergyCap) {
+            return this.SetTotalEnergyCap(room);
+        }
+        return room.memory.totalEnergyCap;
+    }
+
+    private static SetTotalEnergyCap(room: Room): number {
+        let targets: Array<StructureSpawn | StructureExtension> = room.find(FIND_MY_SPAWNS);
+        targets = targets.concat(room.find<StructureSpawn | StructureExtension>(FIND_STRUCTURES).filter(structure => structure.structureType === STRUCTURE_EXTENSION));
+        room.memory.totalEnergyCap = _.sum(targets.map(t => t.energyCapacity));
+        return room.memory.totalEnergyCap;
     }
 }

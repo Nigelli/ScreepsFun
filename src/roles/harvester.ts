@@ -3,16 +3,17 @@ import { Task } from "types/task";
 import { TaskType } from "enums/task-type";
 import { BaseCreep } from "./base-creep";
 
-export class Harvester extends BaseCreep implements RoleCreep {
-    constructor(creep: Creep) {
-        super(creep);
+export class Harvester extends BaseCreep {
+
+    public static DoWork(creep: Creep) {
+        super.DoWork(creep)
     }
 
-    protected GetTask(): Task | undefined {
-        if (this.creep.carryCapacity === _.sum(this.creep.carry)) {
-            return TaskFactory.Create(TaskType.Deposit, this.creep);
+    public static GetTask(creep: Creep): Task | undefined {
+        if (creep.carryCapacity === _.sum(creep.carry)) {
+            return TaskFactory.Create(TaskType.Deposit, creep);
         } else {
-            return TaskFactory.Create(TaskType.Harvest, this.creep);
+            return TaskFactory.Create(TaskType.Harvest, creep);
         }
     }
 }

@@ -7,7 +7,7 @@ declare global {
 
   interface CreepMemory {
     role?: string;
-    room?: Room;
+    roomName?: string;
     working?: boolean;
     task?: Task;
   }

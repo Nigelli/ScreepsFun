@@ -6,6 +6,9 @@ import { RoleName } from "enums/role-name";
 import { Builder } from "roles/builder";
 import { Repairer } from "roles/repairer";
 import { Upgrader } from "roles/upgrader";
+import { Nurse } from "roles/nurse";
+import { Transporter } from "roles/transport";
+import { Towers } from "towers";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
@@ -15,22 +18,29 @@ export const loop = ErrorMapper.wrapLoop(() => {
   _.forEach(Game.spawns, spawn => Spawner.createCreeps(spawn));
 
   _.forEach(Game.rooms, (room) => {
-    new RoomUtilities(room);
+    Towers.Loop(room);
+    RoomUtilities.Loop(room);
   })
 
   _.forEach(Game.creeps, (creep) => {
     switch (creep.memory.role) {
       case RoleName.Builder:
-        new Builder(creep).DoWork();
+        Builder.DoWork(creep);
         break;
       case RoleName.Harvester:
-        new Harvester(creep).DoWork();
+        Harvester.DoWork(creep);
         break;
       case RoleName.Repairer:
-        new Repairer(creep).DoWork();
+        Repairer.DoWork(creep);
         break;
       case RoleName.Upgrader:
-        new Upgrader(creep).DoWork();
+        Upgrader.DoWork(creep);
+        break;
+      case RoleName.Nurse:
+        Nurse.DoWork(creep);
+        break;
+      case RoleName.Transporter:
+        Transporter.DoWork(creep);
         break;
       default:
         break;

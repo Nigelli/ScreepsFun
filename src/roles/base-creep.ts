@@ -2,21 +2,16 @@ import { Task } from "types/task";
 import { TaskProcessor } from "processor/task.processor";
 
 export class BaseCreep {
-    protected creep: Creep;
 
-    constructor(creep: Creep) {
-        this.creep = creep;
-    }
-
-    public DoWork(): void {
-        if (!this.creep.memory.task || this.creep.memory.task.complete) {
-            this.creep.memory.task = this.GetTask();
+    public static DoWork(creep: Creep): void {
+        if (!creep.memory.task || creep.memory.task.complete) {
+            creep.memory.task = this.GetTask(creep);
         }
-        TaskProcessor.Process(this.creep.memory.task as Task, this.creep);
+        TaskProcessor.Process(creep.memory.task as Task, creep);
     }
 
-    protected GetTask(): Task | undefined {
-        this.creep.say(`Looks like my role has no GetTask implementation`);
+    public static GetTask(creep: Creep): Task | undefined {
+        creep.say(`Looks like my role has no GetTask implementation`);
         return;
     }
 

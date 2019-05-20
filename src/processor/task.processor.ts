@@ -5,6 +5,9 @@ import { TaskFactory } from "factory/task.factory";
 export class TaskProcessor {
     public static Process(task: Task, creep: Creep) {
         const target = TaskFactory.GetTarget(task);
+        if (!target) {
+            task.complete = true;
+        }
         if (this.IsCloseEnough(task.targetAction, target, creep.pos)) {
             this.DoAction(task, target, creep);
         } else {
@@ -14,6 +17,8 @@ export class TaskProcessor {
 
     private static IsCloseEnough(action: Action, target: _HasRoomPosition, creepPosition: RoomPosition): boolean {
         switch (action) {
+            case Action.Repair:
+                return creepPosition.inRangeTo(target, 3);
             default:
                 return creepPosition.isNearTo(target);
         }
@@ -68,7 +73,9 @@ export class TaskProcessor {
             (target as Structure).structureType === STRUCTURE_CONTROLLER) {
             this.ProcessUpgrade(target, creep, task);
         } else {
-            creep.transfer(target as Creep, RESOURCE_ENERGY);
+            if (creep.transfer(target as Creep, RESOURCE_ENERGY) !== OK) {
+                task.complete = true;
+            };
         }
     }
 
@@ -77,7 +84,6 @@ export class TaskProcessor {
             task.complete = true;
             return;
         }
-
         if (creep.build(target) !== OK) {
             task.complete = true;
         }
@@ -89,7 +95,7 @@ export class TaskProcessor {
             return;
         }
 
-        if (creep.repair(target) !== OK) {
+        if (creep.repair(target) !== OK || (target.hitsMax - target.hits) === 0) {
             task.complete = true;
         }
     }
@@ -116,6 +122,7 @@ export class TaskProcessor {
         if ((target as Structure).structureType &&
             (target as Structure).structureType === STRUCTURE_CONTROLLER) {
             creep.upgradeController(target as StructureController);
+            return;
         }
         task.complete = true;
         return;

@@ -5,17 +5,17 @@ import { TaskType } from "enums/task-type";
 import { Action } from "enums/action";
 import { BaseCreep } from "./base-creep";
 
-export class Builder extends BaseCreep implements RoleCreep {
+export class Builder extends BaseCreep {
 
-    constructor(creep: Creep) {
-        super(creep);
+    public static DoWork(creep: Creep) {
+        super.DoWork(creep)
     }
 
-    protected GetTask(): Task | undefined {
-        if (_.sum(this.creep.carry) >= this.creep.carryCapacity / 2) {
-            return TaskFactory.Create(TaskType.Build, this.creep);
+    public static GetTask(creep: Creep): Task | undefined {
+        if (_.sum(creep.carry) >= creep.carryCapacity / 2) {
+            return TaskFactory.Create(TaskType.Build, creep);
         } else {
-            return TaskFactory.Create(TaskType.Collect, this.creep);
+            return TaskFactory.Create(TaskType.Collect, creep);
         }
     }
 }

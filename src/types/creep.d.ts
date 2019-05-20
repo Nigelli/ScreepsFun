@@ -1,3 +1,0 @@
-interface RoleCreep {
-    DoWork(): void;
-}

@@ -3,6 +3,10 @@ export enum TaskType {
     Harvest = 'harvest',
     Build = 'build',
     Collect = 'collect',
+    CollectHarvested = 'collectHarvested',
     Upgrade = 'upgrade',
-    Repair = 'repair'
+    Repair = 'repair',
+    Nurse = 'nurse',
+    Deliver = 'deliver',
+    ChargeTower = 'charge_tower'
 }
